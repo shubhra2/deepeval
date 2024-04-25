@@ -181,10 +181,10 @@ class GEval(BaseMetric):
             criteria=self.criteria, parameters=g_eval_params_str
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res, self)
         return data["steps"]
 
@@ -267,10 +267,10 @@ class GEval(BaseMetric):
         except AttributeError:
             # This catches the case where a_generate_raw_response doesn't exist.
             if self.using_native_model:
-                res, cost = self.model.generate(prompt)
+                res, cost = self.model.generate_llm(prompt)
                 self.evaluation_cost += cost
             else:
-                res = self.model.generate(prompt)
+                res = self.model.generate_llm(prompt)
                 data = trimAndLoadJson(res, self)
             return data["score"], data["reason"]
 

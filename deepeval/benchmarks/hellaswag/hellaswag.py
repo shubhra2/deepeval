@@ -82,7 +82,7 @@ class HellaSwag(DeepEvalBaseBenchmark):
             task=task,
             n_shots=self.n_shots,
         )
-        prediction = model.generate(prompt)[0]
+        prediction = model.generate_llm(prompt)[0]
 
         # Define Metric
         score = self.scorer.exact_match_score(

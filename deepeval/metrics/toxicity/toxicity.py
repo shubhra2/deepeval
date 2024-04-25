@@ -135,10 +135,10 @@ class ToxicityMetric(BaseMetric):
             score=format(self.score, ".2f"),
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         return res
 
     async def _a_generate_verdicts(self) -> List[ToxicityVerdict]:
@@ -163,10 +163,10 @@ class ToxicityMetric(BaseMetric):
         verdicts: List[ToxicityVerdict] = []
         prompt = ToxicityTemplate.generate_verdicts(opinions=self.opinions)
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res, self)
         verdicts = [ToxicityVerdict(**item) for item in data["verdicts"]]
         return verdicts
@@ -184,10 +184,10 @@ class ToxicityMetric(BaseMetric):
     def _generate_opinions(self, actual_output: str) -> List[str]:
         prompt = BiasTemplate.generate_opinions(actual_output=actual_output)
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res, self)
         return data["opinions"]
 

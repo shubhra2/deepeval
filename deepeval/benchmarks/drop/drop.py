@@ -78,7 +78,7 @@ class DROP(DeepEvalBaseBenchmark):
             type=golden.context[0],
             n_shots=self.n_shots,
         )
-        prediction = model.generate(prompt)[0]
+        prediction = model.generate_llm(prompt)[0]
         print(prediction)
 
         # Define Metric

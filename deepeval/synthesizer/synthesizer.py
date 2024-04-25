@@ -63,9 +63,9 @@ class Synthesizer:
             evolution_method = random.choice(evolution_methods)
             prompt = evolution_method(input=evolved_text, context=context)
             if self.using_native_model:
-                evolved_text, _ = self.model.generate(prompt)
+                evolved_text, _ = self.model.generate_llm(prompt)
             else:
-                evolved_text = self.model.generate(prompt)
+                evolved_text = self.model.generate_llm(prompt)
 
         return evolved_text
 
@@ -84,9 +84,9 @@ class Synthesizer:
             context=context, max_goldens_per_context=max_goldens_per_context
         )
         if self.using_native_model:
-            res, _ = self.model.generate(prompt)
+            res, _ = self.model.generate_llm(prompt)
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res)
         synthetic_data = [SyntheticData(**item) for item in data["data"]]
         temp_goldens: List[Golden] = []
@@ -151,9 +151,9 @@ class Synthesizer:
                         max_goldens_per_context=max_goldens_per_context,
                     )
                     if self.using_native_model:
-                        res, _ = self.model.generate(prompt)
+                        res, _ = self.model.generate_llm(prompt)
                     else:
-                        res = self.model.generate(prompt)
+                        res = self.model.generate_llm(prompt)
                     data = trimAndLoadJson(res)
                     synthetic_data = [
                         SyntheticData(**item) for item in data["data"]

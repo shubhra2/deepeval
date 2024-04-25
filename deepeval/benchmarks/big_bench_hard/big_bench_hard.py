@@ -83,7 +83,7 @@ class BigBenchHard(DeepEvalBaseBenchmark):
             n_shots=self.n_shots,
             enable_cot=self.enable_cot,
         )
-        prediction = model.generate(prompt)
+        prediction = model.generate_llm(prompt)
         prediction = prediction.split()[-1]
         prediction = prediction[:-1] if self.enable_cot else prediction
 

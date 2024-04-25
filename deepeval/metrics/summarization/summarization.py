@@ -222,10 +222,10 @@ class SummarizationMetric(BaseMetric):
 """
         prompt += """Reason:"""
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         return res
 
     def _calculate_score(self, score_type: ScoreType) -> float:
@@ -277,10 +277,10 @@ class SummarizationMetric(BaseMetric):
             questions=self.assessment_questions, text=text
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res, self)
         return data["answers"]
 
@@ -297,10 +297,10 @@ class SummarizationMetric(BaseMetric):
     def _generate_assessment_questions(self, text: str):
         prompt = SummarizationTemplate.generate_questions(text=text, n=self.n)
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res, self)
         return data["questions"]
 
@@ -392,10 +392,10 @@ class SummarizationMetric(BaseMetric):
             summary_claims=self.claims, orignal_text="\n\n".join(self.truths)
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res, self)
         verdicts = [
             SummarizationAlignmentVerdict(**item) for item in data["verdicts"]
@@ -417,10 +417,10 @@ class SummarizationMetric(BaseMetric):
         # Borrow faithfulness template
         prompt = FaithfulnessTemplate.generate_claims(text=text)
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res, self)
         return data["claims"]
 

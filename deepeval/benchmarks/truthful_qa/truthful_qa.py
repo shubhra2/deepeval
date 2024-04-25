@@ -83,7 +83,7 @@ class TruthfulQA(DeepEvalBaseBenchmark):
         prompt: dict = TruthfulQATemplate.generate_output(
             input=golden.input, mode=mode
         )
-        prediction = model.generate(prompt)
+        prediction = model.generate_llm(prompt)
 
         # Define Metric
         if mode == TruthfulQAMode.MC1:
@@ -92,7 +92,7 @@ class TruthfulQA(DeepEvalBaseBenchmark):
             )
 
         if mode == TruthfulQAMode.MC2:
-            prediction = model.generate(prompt)
+            prediction = model.generate_llm(prompt)
             # Define Metric
             score = self.scorer.truth_identification_score(
                 golden.expected_output, prediction

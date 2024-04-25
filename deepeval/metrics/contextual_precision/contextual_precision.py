@@ -141,10 +141,10 @@ class ContextualPrecisionMetric(BaseMetric):
             score=format(self.score, ".2f"),
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         return res
 
     async def _a_generate_verdicts(
@@ -175,10 +175,10 @@ class ContextualPrecisionMetric(BaseMetric):
             retrieval_context=retrieval_context,
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res, self)
         verdicts = [
             ContextualPrecisionVerdict(**item) for item in data["verdicts"]

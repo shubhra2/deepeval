@@ -134,10 +134,10 @@ class AnswerRelevancyMetric(BaseMetric):
             score=format(self.score, ".2f"),
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         return res
 
     async def _a_generate_verdicts(
@@ -168,10 +168,10 @@ class AnswerRelevancyMetric(BaseMetric):
             actual_output=self.statements,
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res, self)
         verdicts = [AnswerRelvancyVerdict(**item) for item in data["verdicts"]]
         return verdicts
@@ -199,10 +199,10 @@ class AnswerRelevancyMetric(BaseMetric):
             actual_output=actual_output,
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res, self)
         return data["statements"]
 

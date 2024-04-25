@@ -138,10 +138,10 @@ class ContextualRelevancyMetric(BaseMetric):
             score=format(self.score, ".2f"),
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         return res
 
     def _calculate_score(self):
@@ -193,10 +193,10 @@ class ContextualRelevancyMetric(BaseMetric):
                 text=text, context=context
             )
             if self.using_native_model:
-                res, cost = self.model.generate(prompt)
+                res, cost = self.model.generate_llm(prompt)
                 self.evaluation_cost += cost
             else:
-                res = self.model.generate(prompt)
+                res = self.model.generate_llm(prompt)
             data = trimAndLoadJson(res, self)
             verdict = ContextualRelevancyVerdict(**data)
             verdicts.append(verdict)

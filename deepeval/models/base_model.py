@@ -44,7 +44,7 @@ class DeepEvalBaseLLM(ABC):
         pass
 
     @abstractmethod
-    def generate(self, *args, **kwargs) -> str:
+    def generate_llm(self, *args, **kwargs) -> str:
         """Runs the model to output LLM response.
 
         Returns:

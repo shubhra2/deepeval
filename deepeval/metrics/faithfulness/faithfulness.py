@@ -130,10 +130,10 @@ class FaithfulnessMetric(BaseMetric):
             score=format(self.score, ".2f"),
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
 
         return res
 
@@ -149,7 +149,7 @@ class FaithfulnessMetric(BaseMetric):
             res, cost = await self.model.a_generate(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
 
         data = trimAndLoadJson(res, self)
         verdicts = [FaithfulnessVerdict(**item) for item in data["verdicts"]]
@@ -164,10 +164,10 @@ class FaithfulnessMetric(BaseMetric):
             claims=self.claims, retrieval_context="\n\n".join(self.truths)
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
 
         data = trimAndLoadJson(res, self)
         verdicts = [FaithfulnessVerdict(**item) for item in data["verdicts"]]
@@ -190,10 +190,10 @@ class FaithfulnessMetric(BaseMetric):
             text="\n\n".join(retrieval_context)
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
 
         data = trimAndLoadJson(res, self)
         return data["truths"]
@@ -212,10 +212,10 @@ class FaithfulnessMetric(BaseMetric):
     def _generate_claims(self, actual_output: str) -> List[str]:
         prompt = FaithfulnessTemplate.generate_claims(text=actual_output)
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
 
         data = trimAndLoadJson(res, self)
         return data["claims"]

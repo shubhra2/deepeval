@@ -66,7 +66,7 @@ class GSM8K(DeepEvalBaseBenchmark):
             n_shots=self.n_shots,
             enable_cot=self.enable_cot,
         )
-        prediction = model.generate(prompt)
+        prediction = model.generate_llm(prompt)
 
         # Define Metric
         score = self.scorer.exact_match_score(

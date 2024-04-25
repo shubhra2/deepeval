@@ -148,10 +148,10 @@ class ContextualRecallMetric(BaseMetric):
         )
 
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         return res
 
     def _calculate_score(self):
@@ -191,10 +191,10 @@ class ContextualRecallMetric(BaseMetric):
             expected_output=expected_output, retrieval_context=retrieval_context
         )
         if self.using_native_model:
-            res, cost = self.model.generate(prompt)
+            res, cost = self.model.generate_llm(prompt)
             self.evaluation_cost += cost
         else:
-            res = self.model.generate(prompt)
+            res = self.model.generate_llm(prompt)
         data = trimAndLoadJson(res, self)
         verdicts = [
             ContextualRecallVerdict(**item) for item in data["verdicts"]
