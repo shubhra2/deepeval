@@ -22,6 +22,8 @@ valid_gpt_models = [
     "gpt-3.5-turbo",
     "gpt-3.5-turbo-16k",
     "gpt-3.5-turbo-0125",
+    "Mistral-7B-Instruct",
+    "Mixtral-8x7B-Instruct"
 ]
 
 default_gpt_model = "gpt-4-turbo"
@@ -87,6 +89,7 @@ class GPTModel(DeepEvalBaseLLM):
         return ChatOpenAI(
             model_name=self.model_name,
             openai_api_key=self._openai_api_key,
+            openai_api_base="http://localhost:8000/v1",
             *self.args,
             **self.kwargs,
         )
