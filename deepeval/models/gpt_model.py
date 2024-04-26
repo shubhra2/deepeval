@@ -24,6 +24,7 @@ valid_gpt_models = [
     "gpt-3.5-turbo-0125",
     "Mistral-7B-Instruct",
     "Mixtral-8x7B-Instruct"
+    "Mixtral-8x7B"
 ]
 
 default_gpt_model = "gpt-4-turbo"
