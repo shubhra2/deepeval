@@ -90,7 +90,7 @@ class GPTModel(DeepEvalBaseLLM):
         return ChatOpenAI(
             model_name=self.model_name,
             openai_api_key=self._openai_api_key,
-            openai_api_base="http://llm_module:8000/v1",
+            openai_api_base="http://vllm_openai:8000/v1",
             *self.args,
             **self.kwargs,
         )
